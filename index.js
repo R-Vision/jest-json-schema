@@ -20,10 +20,13 @@ const buildToBeValidSchema = require('./matchers/toBeValidSchema');
 function matchersWithOptions(userOptions = {}, extendAjv) {
   const defaultOptions = {
     allErrors: true,
+    schemaId: 'id',
+    meta: false,
   };
 
   const options = Object.assign(defaultOptions, userOptions);
   const ajv = new Ajv(options);
+  ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
   if (typeof extendAjv === 'function') {
     extendAjv(ajv);
   }
